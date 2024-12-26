@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #clickButton {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            display: none; /* Hidden by default */
+        }
+        #startButton {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #timer {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Click Game</h1>
+        <p>How many times can you click in 10 seconds?</p>
+        <button id="startButton">Start</button>
+        <button id="clickButton">Click Me!</button>
+        <div id="timer">Time Left: 10 seconds</div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('startButton');
+        const clickButton = document.getElementById('clickButton');
+        const timerDisplay = document.getElementById('timer');
+        const resultDisplay = document.getElementById('result');
+
+        let timeLeft = 10;
+        let clickCount = 0;
+        let timerInterval;
+
+        // Start button event listener
+        startButton.addEventListener('click', () => {
+            timeLeft = 10;
+            clickCount = 0;
+            timerDisplay.textContent = `Time Left: ${timeLeft} seconds`;
+            resultDisplay.textContent = '';
+
+            // Hide Start button and show Click button
+            startButton.style.display = 'none';
+            clickButton.style.display = 'inline-block';
+
+            // Start the timer
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = `Time Left: ${timeLeft} seconds`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        });
+
+        // Click button event listener
+        clickButton.addEventListener('click', () => {
+            clickCount++;
+        });
+
+        // End game function
+        function endGame() {
+            clickButton.style.display = 'none';
+            startButton.style.display = 'inline-block';
+            resultDisplay.textContent = `You clicked ${clickCount} times!`;
+        }
+    </script>
+</body>
+</html>
